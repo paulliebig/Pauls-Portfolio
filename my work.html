@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Work - Paul Liebig</title>
+    <link rel="stylesheet" href="my work.css">
+</head>
+<body>
+    <!-- Header mit Gradient und Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html" class="logo">
+                    <img src="./Media/PL Logo.svg" alt="Paul Liebig Logo">
+                </a>
+                <span class="logo-text">Paul Liebig</span>
+            </div>
+            
+            <nav class="navbar visible">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About me</a>
+                <a href="my work.html" class="nav-link">My Work</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main>
+        <!-- Parallax Background -->
+        <div class="parallax-container">
+            <div class="parallax-layer" id="layer1"></div>
+            <div class="parallax-layer" id="layer2">
+                <video poster="Media/TV_00000.png" autoplay loop muted playsinline>
+                    <source src="./Media/my work layer 2.webm" type="video/webm">
+                </video>
+            </div>
+        </div>
+
+        <!-- Boxes Container -->
+        <div class="boxes">
+            <!-- Project Box 1 -->
+            <div class="project-info invisible" id="project1" data-direction="right">
+                <h2>Project Title 1</h2>
+                <p>Beschreibung des ersten Projekts. Hier kannst du Details über die verwendeten Techniken, Tools und den kreativen Prozess teilen.</p>
+                <div class="project-tags">
+                    <span class="tag">3D Animation</span>
+                    <span class="tag">Blender</span>
+                    <span class="tag">VFX</span>
+                </div>
+            </div>
+
+            <!-- Project Box 2 -->
+            <div class="project-info invisible" id="project2" data-direction="left">
+                <h2>Project Title 2</h2>
+                <p>Beschreibung des zweiten Projekts mit Details über die kreative Vision und technische Umsetzung.</p>
+                <div class="project-tags">
+                    <span class="tag">Motion Design</span>
+                    <span class="tag">Cinema 4D</span>
+                </div>
+            </div>
+
+            <!-- Project Box 3 -->
+            <div class="project-info invisible" id="project3" data-direction="left">
+                <h2>Project Title 3</h2>
+                <p>Informationen zum dritten Projekt und den verwendeten Techniken und kreativen Entscheidungen.</p>
+                <div class="project-tags">
+                    <span class="tag">Character Design</span>
+                    <span class="tag">Rendering</span>
+                </div>
+            </div>
+
+            <!-- Project Box 4 -->
+            <div class="project-info invisible" id="project4" data-direction="right">
+                <h2>Project Title 4</h2>
+                <p>Details zum vierten Projekt mit Fokus auf die künstlerische und technische Ausführung.</p>
+                <div class="project-tags">
+                    <span class="tag">Visual Effects</span>
+                    <span class="tag">Compositing</span>
+                </div>
+            </div>
+
+            <!-- Project Box 5 -->
+            <div class="project-info invisible" id="project5" data-direction="left">
+                <h2>Project Title 5</h2>
+                <p>Beschreibung des fünften Projekts und der kreativen Herausforderungen.</p>
+                <div class="project-tags">
+                    <span class="tag">Animation</span>
+                    <span class="tag">Post Production</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="my work.js"></script>
+</body>
+</html>

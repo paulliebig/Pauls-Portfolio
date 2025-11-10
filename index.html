@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paul Liebig - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header mit Gradient und Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html" class="logo">
+                    <img src="./Media/PL Logo.svg" alt="Paul Liebig Logo">
+                </a>
+                <span class="logo-text">Paul Liebig</span>
+            </div>
+            
+            <nav class="navbar">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About me</a>
+                <a href="my work.html" class="nav-link">My Work</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Parallax Background -->
+    <div class="parallax-container">
+        <div class="parallax-layer" id="layer1"></div>
+        <div class="parallax-layer" id="layer2">
+            <video autoplay loop muted playsinline>
+                <source src="./Media/layer 2.webm" type="video/webm">
+            </video>
+        </div>
+        <div class="parallax-layer" id="layer3"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-wrapper">
+        <!-- Hero Section - nur Platzhalter -->
+        <div class="hero-section"></div>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="about-header">
+                <span class="nav-arrow" id="prevBtn">◄</span>
+                <h2 id="carouselTitle">About me</h2>
+                <span class="nav-arrow" id="nextBtn">►</span>
+            </div>
+
+            <div class="carousel-container">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-item active" data-title="About me">
+                        <div class="item-content">
+                            <h3>3D Artist</h3>
+                            <p>Spezialisiert auf fotorealistische 3D-Visualisierungen und Character Design mit Blender und Cinema 4D.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-title="My Work">
+                        <div class="item-content">
+                            <h3>Digital Creator</h3>
+                            <p>Kreative digitale Inhalte für Social Media, Werbung und Entertainment-Projekte.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-title="Gallery">
+                        <div class="item-content">
+                            <h3>Motion Design</h3>
+                            <p>Animationen und visuelle Effekte, die Geschichten zum Leben erwecken.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

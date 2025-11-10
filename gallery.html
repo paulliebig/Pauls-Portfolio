@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paul Liebig - Gallery</title>
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+    <!-- Header mit Gradient und Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html" class="logo">
+                    <img src="./Media/PL Logo.svg" alt="Paul Liebig Logo">
+                </a>
+                <span class="logo-text">Paul Liebig</span>
+            </div>
+            
+            <nav class="navbar visible">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About me</a>
+                <a href="my work.html" class="nav-link">My Work</a>
+                <a href="gallery.html" class="nav-link active">Gallery</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Parallax Background -->
+    <div class="parallax-container">
+        <div class="parallax-layer" id="layer1"></div>
+        <div class="parallax-layer" id="layer2">
+            <video autoplay loop muted playsinline>
+                
+            </video>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-wrapper">
+        <section class="work-section">
+            <h1 class="work-title">My Work</h1>
+            <p class="work-subtitle">A collection of my projects</p>
+
+            <div class="work-grid">
+                <!-- Project Cards werden hier durch JavaScript eingefügt -->
+            </div>
+        </section>
+    </div>
+
+    <script src="gallery.js"></script>
+</body>
+</html>
