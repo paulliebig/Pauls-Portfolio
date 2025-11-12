@@ -1,82 +1,35 @@
-@font-face {
-    font-family: 'Road Rage';
-    src: url('./fonts/RoadRage-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+/* Import übergeordnetes CSS */
+@import url('./styles.css');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* ======================
+   GALLERY PAGE SPECIFIC
+   ====================== */
 
+/* Override body background */
 body {
-    font-family: 'Road Rage', 'Arial', sans-serif;
     background: #000;
-    color: #fff;
-    overflow-x: hidden;
 }
 
-/* Header mit Gradient */
+/* Override header pointer events */
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
+    pointer-events: none;
     background: linear-gradient(180deg, 
         rgba(0, 0, 0, 1) 0%,
         rgba(82, 64, 53, 0.41) 41%,
         rgba(54, 44, 39, 0) 100%
     );
-    padding: 2rem;
-    transition: background 0.3s ease;
-    pointer-events: none;
 }
 
 .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
     pointer-events: all;
 }
 
-.logo-section {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: transform 0.3s ease;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-.logo img {
-    height: 60px;
-    width: auto;
-}
-
 .logo-text {
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: normal;
     white-space: nowrap;
 }
 
-/* Navbar */
+/* Navbar visibility */
 .navbar {
-    display: flex;
-    gap: 3rem;
     opacity: 1;
     transform: translateY(0);
     transition: opacity 0.6s ease, transform 0.6s ease;
@@ -86,34 +39,6 @@ body {
     opacity: 1;
     transform: translateY(0);
     pointer-events: all;
-}
-
-.nav-link {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.5rem;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
-}
-
-.nav-link:hover {
-    color: #ccc;
 }
 
 /* Parallax Container */
@@ -272,26 +197,6 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .header {
-        padding: 1rem;
-    }
-
-    .logo img {
-        height: 40px;
-    }
-
-    .logo-text {
-        font-size: 1.2rem;
-    }
-
-    .navbar {
-        gap: 1.5rem;
-    }
-
-    .nav-link {
-        font-size: 1.2rem;
-    }
-
     .work-section {
         padding: 10rem 1rem 4rem 1rem;
     }

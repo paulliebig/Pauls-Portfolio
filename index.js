@@ -52,7 +52,9 @@ function updateParallax() {
     `;
 }
 
-// About Section & Navbar Fade In (gleichzeitig)
+// =======================
+// INDEX SPECIFIC: About Section & Navbar Fade In
+// =======================
 function updateVisibility() {
     const scrollThreshold = window.innerHeight * 0.7;
     
@@ -125,19 +127,8 @@ nextBtn.addEventListener('click', () => {
 });
 
 // =======================
-// ACTIVE NAV LINK
+// INITIALIZE
 // =======================
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.nav-link').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-        link.classList.add('active');
-    } else {
-        link.classList.remove('active');
-    }
-});
-
-// Initialize
 updateCarousel();
 updateParallax();
 updateVisibility();

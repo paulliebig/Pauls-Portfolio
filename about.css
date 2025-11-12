@@ -1,103 +1,9 @@
-@font-face {
-    font-family: 'Road Rage';
-    src: url('./fonts/RoadRage-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+/* Import übergeordnetes CSS */
+@import url('./styles.css');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Road Rage', 'Arial', sans-serif;
-    background: #1a1a1a;
-    color: #fff;
-    overflow-x: hidden;
-}
-
-/* Header */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    background: linear-gradient(180deg, 
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(0, 0, 0, 0.4) 70%,
-        rgba(0, 0, 0, 0) 100%
-    );
-    padding: 2rem;
-    transition: background 0.3s ease;
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.logo-section {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: transform 0.3s ease;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-.logo img {
-    height: 60px;
-    width: auto;
-}
-
-.logo-text {
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: normal;
-}
-
-.navbar {
-    display: flex;
-    gap: 3rem;
-}
-
-.nav-link {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.5rem;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
-}
+/* ======================
+   ABOUT PAGE SPECIFIC
+   ====================== */
 
 /* Main Wrapper */
 .main-wrapper {
@@ -505,22 +411,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    .header {
-        padding: 1rem;
-    }
-
-    .logo img {
-        height: 40px;
-    }
-
-    .navbar {
-        gap: 1.5rem;
-    }
-
-    .nav-link {
-        font-size: 1.2rem;
-    }
-
     .hero-about {
         grid-template-columns: 1fr;
         gap: 2rem;

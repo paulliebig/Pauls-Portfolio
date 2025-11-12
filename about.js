@@ -56,7 +56,6 @@ function updateCarousel() {
     let offset = 0;
     
     if (currentIndex === 0) {
-        // offset = (window.innerWidth / 2) - (activeCardWidth / 2);
         offset = (window.innerWidth / 2) - (activeCardWidth / 2);
     } else {
         // Berechne Position basierend auf allen vorherigen Cards
@@ -69,7 +68,6 @@ function updateCarousel() {
                 offset -= (cardWidth + gap);
             }
         }
-        
     }
 
     track.style.transform = `translateX(${offset}px)`;
@@ -85,7 +83,7 @@ nextBtn.addEventListener('click', () => {
     updateCarousel();
 });
 
-// Auto-play carousel
+// Auto-play carousel (auskommentiert)
 let autoplayInterval = setInterval(() => {
     // currentIndex = (currentIndex + 1) % totalCards;
     // updateCarousel();
@@ -102,35 +100,6 @@ carouselWrapper.addEventListener('mouseleave', () => {
         // currentIndex = (currentIndex + 1) % totalCards;
         // updateCarousel();
     }, 4000);
-});
-
-// =======================
-// ACTIVE NAV LINK
-// =======================
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.nav-link').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPage) {
-        link.classList.add('active');
-    } else {
-        link.classList.remove('active');
-    }
-});
-
-// =======================
-// SMOOTH SCROLL
-// =======================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
 });
 
 // =======================
