@@ -56,16 +56,26 @@ function updateParallax() {
 // INDEX SPECIFIC: About Section & Navbar Fade In
 // =======================
 function updateVisibility() {
+    const isMobile = window.innerWidth <= 768;
     const scrollThreshold = window.innerHeight * 0.7;
-    
-    if (scrollY >= scrollThreshold) {
-        aboutSection.classList.add('visible');
-        navbar.classList.add('visible');
+
+    if (isMobile) {
+        // Auf Mobile: Scroll-Effekt wird deaktiviert, Navbar bleibt unsichtbar
+        aboutSection.classList.add('visible'); // About-Content darf trotzdem erscheinen
+        navbar.classList.remove('visible');    // Kein automatisches Einblenden
     } else {
-        aboutSection.classList.remove('visible');
-        navbar.classList.remove('visible');
+        // Auf Desktop: klassischer Scroll-Fade-In
+        if (scrollY >= scrollThreshold) {
+            aboutSection.classList.add('visible');
+            navbar.classList.add('visible');
+        } else {
+            aboutSection.classList.remove('visible');
+            navbar.classList.remove('visible');
+        }
     }
 }
+
+
 
 // =======================
 // CAROUSEL LOGIC
@@ -135,3 +145,25 @@ updateVisibility();
 
 // Resize Handler
 window.addEventListener('resize', updateCarousel);
+
+// =======================
+// BURGER MENU (GALLERY SPECIFIC)
+// =======================
+document.addEventListener('DOMContentLoaded', () => {
+    const burger = document.querySelector('.burger');
+    const navbar = document.querySelector('.navbar');
+
+    if (burger && navbar) {
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            navbar.classList.toggle('active');
+        });
+
+        navbar.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                navbar.classList.remove('active');
+            });
+        });
+    }
+});

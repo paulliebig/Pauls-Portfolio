@@ -437,4 +437,8 @@
         width: 300px;
         height: 215px;
     }
+
+    .header {
+    pointer-events: all;
+}
 }

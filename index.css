@@ -323,3 +323,23 @@ body {
         font-size: 1.8rem;
     }
 }
+
+@media (max-width: 768px) {
+    /* =======================
+   NAVBAR ANIMATION (MATCH ABOUT PAGE)
+   ======================= */
+
+.navbar {
+    opacity: 0;
+    transform: translateY(30px); /* gleiche Ausgangsposition wie .animated-box */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    pointer-events: none;
+}
+
+.navbar.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+}
