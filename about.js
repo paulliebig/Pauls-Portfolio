@@ -48,7 +48,7 @@ function initKeenSlider() {
             perView: 2.2, // Shows 1 full slide on each side for symmetry
             spacing: 32,
         },
-        initial: Math.floor(sliderElement.children.length / 2), // Start with center slide
+        initial: 0, // Start with first slide
         created: () => {
             updateActiveSlide();
         },
@@ -143,6 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Keen Slider after DOM is loaded
     initKeenSlider();
+    
+    // Ensure first card is active on initial load
+    setTimeout(() => {
+        updateActiveSlide();
+    }, 100);
 
     // Add stagger effect to animated boxes
     animatedBoxes.forEach((box, index) => {
