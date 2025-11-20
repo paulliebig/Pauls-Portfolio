@@ -17,12 +17,18 @@
                 <span class="logo-text">Paul Liebig</span>
             </div>
             
-            <nav class="navbar visible">
+            <nav class="navbar">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="about.html" class="nav-link">About me</a>
-                <a href="my work.html" class="nav-link">My Work</a>
+                <a href="my work.html" class="nav-link active">My Work</a>
                 <a href="gallery.html" class="nav-link">Gallery</a>
             </nav>
+
+            <button class="burger" aria-label="Menü öffnen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -32,9 +38,12 @@
         <div class="parallax-container">
             <div class="parallax-layer" id="layer1"></div>
             <div class="parallax-layer" id="layer2">
-                <video poster="Media/TV_00000.png" autoplay loop muted playsinline>
+                <!-- Video für Desktop -->
+                <video class="desktop-video" poster="Media/TV_00000.png" autoplay loop muted playsinline>
                     <source src="./Media/my work layer 2.webm" type="video/webm">
                 </video>
+                <!-- Bild für Mobile -->
+                <img class="mobile-image" src="./Media/my work mobile.png" alt="My Work Background">
             </div>
         </div>
 

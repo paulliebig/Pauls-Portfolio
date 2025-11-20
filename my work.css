@@ -31,6 +31,47 @@ body {
 /* Navbar pointer-events */
 .navbar {
     pointer-events: all;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Burger Button */
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 10px;
+    pointer-events: all !important;
+    z-index: 102;
+    position: relative;
+    width: 45px;
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger span {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+    display: block;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.burger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.burger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
 }
 
 /* Main Container */
@@ -56,12 +97,20 @@ main {
     height: auto;
 }
 
-#layer2 video {
+/* Desktop Video */
+#layer2 .desktop-video {
     width: 100%;
     height: auto;
     min-height: 100vh;
     object-fit: cover;
     display: block;
+}
+
+/* Mobile Image - versteckt auf Desktop */
+#layer2 .mobile-image {
+    display: none;
+    width: 100%;
+    height: auto;
 }
 
 /* Boxes Container */
@@ -181,21 +230,128 @@ main {
 }
 
 @media (max-width: 768px) {
+    /* Burger Menu anzeigen */
+    .burger {
+        display: flex !important;
+    }
+    
+    /* Navbar verstecken, außer wenn aktiv */
+    .navbar {
+        opacity: 0;
+        pointer-events: none;
+        z-index: 101;
+        transform: translateY(0);
+    }
+    
+    .navbar.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    /* Video ausblenden, Bild einblenden */
+    #layer2 .desktop-video {
+        display: none;
+    }
+    
+    #layer2 .mobile-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        object-fit: cover;
+    }
+    
+    /* Main Container passt sich an Bildhöhe an */
+    main {
+        min-height: 100vh;
+    }
+    
+    /* Project Boxen kleiner und zentriert */
     .project-info {
-        max-width: 90%;
+        max-width: 85%;
+        width: 85%;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) translateY(-50%);
+        padding: 1rem;
+    }
+    
+    .project-info.invisible {
+        transform: translateX(-50%) translateY(-50%);
+        opacity: 0;
+    }
+    
+    .project-info[data-direction="right"].invisible,
+    .project-info[data-direction="left"].invisible {
+        transform: translateX(-50%) translateY(-50%);
+        opacity: 0;
+    }
+    
+    /* Neue Positionen für Mobile */
+    #project1 {
+        top: 29.4%;
         left: 50%;
     }
 
-    .project-info.invisible_left,
-    .project-info.invisible_right {
-        transform: translateX(-50%) translateY(-50%);
+    #project2 {
+        top: 45.3%;
+        left: 50%;
+    }
+
+    #project3 {
+        top: 63.2%;
+        left: 50%;
+    }
+
+    #project4 {
+        top: 80.5%;
+        left: 50%;
+    }
+
+    #project5 {
+        top: 96.7%;
+        left: 50%;
     }
 
     .project-info h2 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
     }
 
     .project-info p {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+    
+    .project-tags {
+        gap: 0.5rem;
+    }
+    
+    .tag {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* Extra klein für sehr kleine Smartphones */
+@media (max-width: 480px) {
+    .project-info {
+        max-width: 90%;
+        width: 90%;
+        padding: 0.875rem;
+    }
+    
+    .project-info h2 {
+        font-size: 1.3rem;
+    }
+
+    .project-info p {
+        font-size: 0.85rem;
+    }
+    
+    .tag {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.7rem;
     }
 }

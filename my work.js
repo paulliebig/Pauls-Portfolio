@@ -42,9 +42,12 @@ function updateParallax() {
 const projectBoxes = document.querySelectorAll('.project-info');
 console.log(projectBoxes);
 
+// Verschiedene Options für Desktop und Mobile
+const isMobile = window.innerWidth <= 768;
+
 const options = {
-    rootMargin: "-200px 0px -200px 0px",
-    threshold: 0.5,
+    rootMargin: isMobile ? "-50px 0px -50px 0px" : "-200px 0px -200px 0px",
+    threshold: isMobile ? 0.3 : 0.5,
 };
 
 function callback(entries, observer) {
@@ -58,11 +61,79 @@ function callback(entries, observer) {
 }
 
 const observer = new IntersectionObserver(callback, options);
+
 document.addEventListener('DOMContentLoaded', () => {
     projectBoxes.forEach((box) => observer.observe(box));
+    
+    // Höhe des Main-Containers an Bildhöhe anpassen (Mobile)
+    if (isMobile) {
+        adjustMainHeight();
+    }
+});
+
+// Funktion um Main-Container-Höhe anzupassen
+function adjustMainHeight() {
+    const mobileImage = document.querySelector('.mobile-image');
+    
+    if (mobileImage) {
+        // Warte bis Bild geladen ist
+        if (mobileImage.complete) {
+            setMainHeight(mobileImage);
+        } else {
+            mobileImage.addEventListener('load', () => {
+                setMainHeight(mobileImage);
+            });
+        }
+    }
+}
+
+function setMainHeight(img) {
+    const main = document.querySelector('main');
+    const boxes = document.querySelector('.boxes');
+    
+    // Setze Höhe basierend auf Bild
+    const imgHeight = img.naturalHeight;
+    const imgWidth = img.naturalWidth;
+    const windowWidth = window.innerWidth;
+    
+    // Berechne tatsächliche Höhe basierend auf Bildverhältnis
+    const actualHeight = (windowWidth / imgWidth) * imgHeight;
+    
+    main.style.minHeight = `${actualHeight}px`;
+    boxes.style.height = `${actualHeight}px`;
+}
+
+// Bei Resize neu berechnen
+window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768) {
+        adjustMainHeight();
+    }
 });
 
 // =======================
 // INITIALIZE
 // =======================
 // updateParallax();
+
+// =======================
+// BURGER MENU
+// =======================
+document.addEventListener('DOMContentLoaded', () => {
+    const burger = document.querySelector('.burger');
+    const navbar = document.querySelector('.navbar');
+
+    if (burger && navbar) {
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            navbar.classList.toggle('active');
+        });
+
+        // Schließe Menü beim Klick auf Links
+        navbar.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                navbar.classList.remove('active');
+            });
+        });
+    }
+});
