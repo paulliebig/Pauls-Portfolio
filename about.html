@@ -5,33 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me - Paul Liebig</title>
     <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css">
 </head>
 <body>
     <!-- Header mit Gradient und Navigation -->
     <header class="header">
-    <div class="header-content">
-        <div class="logo-section">
-            <a href="index.html" class="logo">
-                <img src="./Media/PL Logo.svg" alt="Paul Liebig Logo">
-            </a>
-            <span class="logo-text">Paul Liebig</span>
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html" class="logo">
+                    <img src="./Media/PL Logo.svg" alt="Paul Liebig Logo">
+                </a>
+                <span class="logo-text">Paul Liebig</span>
+            </div>
+
+            <nav class="navbar">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link active">About me</a>
+                <a href="my work.html" class="nav-link">My Work</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+            </nav>
+
+            <button class="burger" aria-label="Menü öffnen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-
-        <nav class="navbar">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="about.html" class="nav-link active">About me</a>
-            <a href="my work.html" class="nav-link">My Work</a>
-            <a href="gallery.html" class="nav-link">Gallery</a>
-        </nav>
-
-        <button class="burger" aria-label="Menü öffnen">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </div>
-</header>
-
+    </header>
 
     <!-- Main Content -->
     <div class="main-wrapper">
@@ -110,31 +110,29 @@
             </div>
             
             <div class="section-right">
-                <!-- Carousel -->
+                <!-- Keen Slider Carousel -->
                 <div class="carousel-wrapper">
-                    <div class="carousel-container-vfx">
-                        <div class="carousel-track-vfx">
-                            <div class="carousel-card">
-                                <img src="./Media/vfx1.jpg" alt="VFX Project 1">
-                            </div>
-                            <div class="carousel-card active">
-                                <img src="./Media/vfx2.jpg" alt="VFX Project 2">
-                            </div>
-                            <div class="carousel-card">
-                                <img src="./Media/vfx3.jpg" alt="VFX Project 3">
-                            </div>
-                            <div class="carousel-card">
-                                <img src="./Media/vfx4.jpg" alt="VFX Project 4">
-                            </div>
-                            <div class="carousel-card">
-                                <img src="./Media/vfx5.jpg" alt="VFX Project 5">
-                            </div>
+                    <div id="keen-slider" class="keen-slider">
+                        <div class="keen-slider__slide carousel-card">
+                            <img src="./Media/vfx1.jpg" alt="VFX Project 1">
+                        </div>
+                        <div class="keen-slider__slide carousel-card">
+                            <img src="./Media/vfx2.jpg" alt="VFX Project 2">
+                        </div>
+                        <div class="keen-slider__slide carousel-card">
+                            <img src="./Media/vfx3.jpg" alt="VFX Project 3">
+                        </div>
+                        <div class="keen-slider__slide carousel-card">
+                            <img src="./Media/vfx4.jpg" alt="VFX Project 4">
+                        </div>
+                        <div class="keen-slider__slide carousel-card">
+                            <img src="./Media/vfx5.jpg" alt="VFX Project 5">
                         </div>
                     </div>
                     
                     <div class="carousel-controls">
-                        <button class="carousel-btn prev-btn">◄</button>
-                        <button class="carousel-btn next-btn">►</button>
+                        <button class="carousel-btn prev-btn" id="prev-btn">◄</button>
+                        <button class="carousel-btn next-btn" id="next-btn">►</button>
                     </div>
                 </div>
             </div>
@@ -158,6 +156,8 @@
             </div>
         </section>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.js"></script>
     <script src="script.js"></script>
     <script src="about.js"></script>
 </body>

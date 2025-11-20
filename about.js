@@ -30,77 +30,79 @@ window.addEventListener('scroll', checkVisibility);
 checkVisibility(); // Initial check
 
 // =======================
-// CAROUSEL VFX
+// KEEN SLIDER CAROUSEL
 // =======================
-const track = document.querySelector('.carousel-track-vfx');
-const cards = document.querySelectorAll('.carousel-card');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
+let slider = null;
 
-let currentIndex = 1; // Start bei Index 1 (mittleres Element)
-const totalCards = cards.length;
+function initKeenSlider() {
+    const sliderElement = document.getElementById('keen-slider');
+    
+    if (!sliderElement) return;
 
-function updateCarousel() {
-    // Entferne active von allen Cards
-    cards.forEach(card => card.classList.remove('active'));
-    
-    // Füge active zur aktuellen Card hinzu
-    cards[currentIndex].classList.add('active');
+    // Initialize Keen Slider
+    slider = new KeenSlider(sliderElement, {
+        loop: true,
+        mode: "snap",
+        slides: {
+            origin: "center",
+            perView: 2.2, // Shows 1 full slide on each side for symmetry
+            spacing: 32,
+        },
+        initial: Math.floor(sliderElement.children.length / 2), // Start with center slide
+        created: () => {
+            updateActiveSlide();
+        },
+        slideChanged: () => {
+            updateActiveSlide();
+        },
+        breakpoints: {
+            "(max-width: 1024px)": {
+                slides: {
+                    perView: 2,
+                    spacing: 24,
+                },
+            },
+            "(max-width: 768px)": {
+                slides: {
+                    perView: 1.3,
+                    spacing: 16,
+                },
+            },
+        },
+    });
 
-    // Berechne Offset für Zentrierung
-    const cardWidth = 350;
-    const gap = 32; // 2rem
-    const activeCardWidth = 450;
-    
-    // Zentriere die aktive Card
-    let offset = 0;
-    
-    if (currentIndex === 0) {
-        offset = (window.innerWidth / 2) - (activeCardWidth / 2);
-    } else {
-        // Berechne Position basierend auf allen vorherigen Cards
-        offset = (window.innerWidth / 2) - (activeCardWidth / 2);
-        
-        for (let i = 0; i < currentIndex; i++) {
-            if (i === currentIndex - 1) {
-                offset -= (cardWidth + gap);
-            } else {
-                offset -= (cardWidth + gap);
-            }
-        }
+    // Navigation buttons
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            slider.prev();
+        });
     }
 
-    track.style.transform = `translateX(${offset}px)`;
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            slider.next();
+        });
+    }
 }
 
-prevBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-    updateCarousel();
-});
+// Update active slide styling
+function updateActiveSlide() {
+    if (!slider) return;
 
-nextBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % totalCards;
-    updateCarousel();
-});
+    const slides = document.querySelectorAll('.carousel-card');
+    const currentIdx = slider.track.details.rel;
 
-// Auto-play carousel (auskommentiert)
-let autoplayInterval = setInterval(() => {
-    // currentIndex = (currentIndex + 1) % totalCards;
-    // updateCarousel();
-}, 4000);
-
-// Pause autoplay on hover
-const carouselWrapper = document.querySelector('.carousel-wrapper');
-carouselWrapper.addEventListener('mouseenter', () => {
-    // clearInterval(autoplayInterval);
-});
-
-carouselWrapper.addEventListener('mouseleave', () => {
-    autoplayInterval = setInterval(() => {
-        // currentIndex = (currentIndex + 1) % totalCards;
-        // updateCarousel();
-    }, 4000);
-});
+    slides.forEach((slide, idx) => {
+        if (idx === currentIdx) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+}
 
 // =======================
 // PARALLAX EFFECT ON IMAGES
@@ -110,7 +112,6 @@ const images = document.querySelectorAll('.image-box img, .single-image img, .br
 window.addEventListener('scroll', () => {
     images.forEach(img => {
         const rect = img.getBoundingClientRect();
-        const scrolled = window.scrollY;
         
         if (rect.top < window.innerHeight && rect.bottom > 0) {
             const yPos = (rect.top - window.innerHeight) * 0.1;
@@ -120,17 +121,7 @@ window.addEventListener('scroll', () => {
 });
 
 // =======================
-// INITIALIZE
-// =======================
-updateCarousel();
-
-// Add stagger effect to animated boxes
-animatedBoxes.forEach((box, index) => {
-    box.style.transitionDelay = `${index * 0.1}s`;
-});
-
-// =======================
-// BURGER MENU (GALLERY SPECIFIC)
+// BURGER MENU
 // =======================
 document.addEventListener('DOMContentLoaded', () => {
     const burger = document.querySelector('.burger');
@@ -149,4 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // Initialize Keen Slider after DOM is loaded
+    initKeenSlider();
+
+    // Add stagger effect to animated boxes
+    animatedBoxes.forEach((box, index) => {
+        box.style.transitionDelay = `${index * 0.1}s`;
+    });
 });
