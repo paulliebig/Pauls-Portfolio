@@ -12,6 +12,7 @@
     margin: 0 auto;
     padding-left: 4rem;
     padding-right: 4rem;
+    box-sizing: border-box;
 }
 
 /* Hero About Section */
@@ -285,12 +286,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: visible;
 }
 
 /* Keen Slider Container */
 .keen-slider {
-    overflow: visible !important;
+    overflow: visible;
     padding: 4rem 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .keen-slider {
+        overflow: hidden;
+    }
 }
 
 /* Carousel Cards */
@@ -419,6 +429,12 @@
 }
 
 @media (max-width: 768px) {
+    .main-wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 100px;
+    }
+
     .hero-about {
         grid-template-columns: 1fr;
         gap: 2rem;

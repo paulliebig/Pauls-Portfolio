@@ -12,11 +12,18 @@
     box-sizing: border-box;
 }
 
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Road Rage', Arial, sans-serif;
     background: #1a1a1a;
     color: #fff;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
 }
 
 /* ======================
