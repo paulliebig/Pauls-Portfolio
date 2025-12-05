@@ -1,0 +1,285 @@
+/* Import übergeordnetes CSS */
+@import url('./styles.css');
+
+/* ======================
+   PROJECT PAGE SPECIFIC
+   ====================== */
+
+body {
+    background: #000;
+}
+
+.header {
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 1) 0%,
+        rgba(82, 64, 53, 0.41) 41%,
+        rgba(54, 44, 39, 0) 100%
+    );
+}
+
+/* Main Content */
+.project-main {
+    padding-top: 120px;
+    min-height: 100vh;
+}
+
+.project-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem 2rem;
+}
+
+/* Project Title */
+.project-title {
+    font-size: 4rem;
+    font-weight: normal;
+    color: #fff;
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+/* Project Grid Layout */
+.project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+/* Video Section */
+.video-section {
+    width: 100%;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+}
+
+/* Tools Section */
+.tools-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: normal;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 400px;
+}
+
+.tool-icon {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.tool-icon:hover {
+    transform: scale(1.1);
+}
+
+/* About Section */
+.about-section {
+    margin-bottom: 4rem;
+}
+
+.about-text {
+    max-width: 100%;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+}
+
+/* Images Grid */
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.image-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    aspect-ratio: 16/9;
+}
+
+.image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Burger Button */
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 102;
+    position: relative;
+    width: 45px;
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger span {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+    display: block;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.burger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.burger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .project-title {
+        font-size: 3rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .tools-grid {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Burger Menu anzeigen */
+    .burger {
+        display: flex !important;
+    }
+    
+    /* Navbar verstecken, außer wenn aktiv */
+    .navbar {
+        opacity: 0;
+        pointer-events: none;
+        z-index: 101;
+    }
+    
+    .navbar.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .project-main {
+        padding-top: 100px;
+    }
+
+    .project-container {
+        padding: 0 1.5rem 3rem 1.5rem;
+    }
+
+    .project-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Grid wird zu Stack */
+    .project-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .tools-grid {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 100%;
+        gap: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    /* Images werden zu 1 Spalte */
+    .images-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-text p {
+        font-size: 0.95rem;
+    }
+}

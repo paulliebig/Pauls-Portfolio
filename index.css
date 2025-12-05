@@ -249,10 +249,14 @@ body {
         padding: 6rem 1rem 3rem 1rem;
     }
 
+    /* Mobile: Navigation Arrows und Title ausblenden */
     .about-header {
-        gap: 1rem;
+        margin-bottom: 2rem;
         margin-top: 1rem;
-        flex-wrap: wrap;
+    }
+
+    .nav-arrow {
+        display: none;
     }
 
     .about-header h2 {
@@ -260,41 +264,49 @@ body {
         text-align: center;
     }
 
-    .nav-arrow {
-        font-size: 2rem;
-    }
-
+    /* Mobile: Carousel deaktivieren, Boxen untereinander */
     .carousel-container {
-        padding: 0 0.5rem;
+        padding: 0 1rem;
+        overflow: visible;
     }
 
     .carousel-track {
-        gap: 1rem;
-        padding: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0;
+        transform: none !important; /* Deaktiviert Carousel-Transform */
+        align-items: center;
     }
 
     .carousel-item {
-        width: 280px;
-        height: 157px;
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        min-height: 200px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
     .carousel-item.active {
-        width: 320px;
-        height: 180px;
-        border: 3px solid #fff;
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        min-height: 200px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: none;
     }
 
     .carousel-item .item-content {
-        padding: 1rem;
+        padding: 2rem 1.5rem;
     }
 
     .carousel-item h3 {
-        font-size: 1.3rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.8rem;
     }
 
     .carousel-item p {
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
 
     /* Layer 3 Mobile Anpassung */
@@ -302,44 +314,44 @@ body {
         height: 150%;
         top: 30%;
     }
+
+    /* =======================
+       NAVBAR ANIMATION (MATCH ABOUT PAGE)
+       ======================= */
+    .navbar {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        pointer-events: none;
+    }
+
+    .navbar.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+    }
 }
 
 @media (max-width: 480px) {
-    .hero-text h1 {
-        font-size: 2rem;
-    }
-
     .carousel-item {
-        width: 240px;
-        height: 135px;
+        max-width: 100%;
+        min-height: 180px;
     }
 
     .carousel-item.active {
-        width: 280px;
-        height: 157px;
+        max-width: 100%;
+        min-height: 180px;
     }
 
     .about-header h2 {
         font-size: 1.8rem;
     }
-}
 
-@media (max-width: 768px) {
-    /* =======================
-   NAVBAR ANIMATION (MATCH ABOUT PAGE)
-   ======================= */
+    .carousel-item h3 {
+        font-size: 1.3rem;
+    }
 
-.navbar {
-    opacity: 0;
-    transform: translateY(30px); /* gleiche Ausgangsposition wie .animated-box */
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    pointer-events: none;
-}
-
-.navbar.active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
-}
-
+    .carousel-item p {
+        font-size: 0.85rem;
+    }
 }

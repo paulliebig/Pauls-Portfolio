@@ -191,26 +191,23 @@ main {
     margin-bottom: 1.5rem;
 }
 
-/* Project Tags */
-.project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-}
-
-.tag {
+/* Project Button */
+.project-button {
+    display: inline-block;
     background: rgba(255, 255, 255, 0.15);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
     color: #fff;
+    text-decoration: none;
     border: 1px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
 }
 
-.tag:hover {
+.project-button:hover {
     background: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive */
@@ -324,13 +321,9 @@ main {
         margin-bottom: 1rem;
     }
     
-    .project-tags {
-        gap: 0.5rem;
-    }
-    
-    .tag {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
+    .project-button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
     }
 }
 
@@ -350,8 +343,8 @@ main {
         font-size: 0.85rem;
     }
     
-    .tag {
-        font-size: 0.75rem;
-        padding: 0.35rem 0.7rem;
+    .project-button {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
     }
 }

@@ -89,6 +89,22 @@ const carouselTitle = document.getElementById('carouselTitle');
 let currentIndex = 0;
 
 function updateCarousel() {
+    const isMobile = window.innerWidth <= 768;
+    
+    // Mobile: Carousel-Funktionalität deaktivieren
+    if (isMobile) {
+        // Alle Items als "active" behandeln (keine spezielle Hervorhebung)
+        items.forEach(item => item.classList.remove('active'));
+        
+        // Title bleibt statisch
+        carouselTitle.textContent = 'About me';
+        
+        // Kein Transform
+        track.style.transform = 'translateX(0)';
+        return;
+    }
+    
+    // Desktop: Normal Carousel
     // Entferne active von allen Items
     items.forEach(item => item.classList.remove('active'));
     
@@ -110,11 +126,10 @@ function updateCarousel() {
     // Starte Animation
     carouselTitle.style.animation = 'fadeInScale 0.4s ease';
 
-    // Berechne Offset für Zentrierung - responsive
-    const isMobile = window.innerWidth <= 768;
-    const itemWidth = isMobile ? 280 : 500;
-    const activeWidth = isMobile ? 320 : 600;
-    const gap = isMobile ? 16 : 32;
+    // Berechne Offset für Zentrierung
+    const itemWidth = 500;
+    const activeWidth = 600;
+    const gap = 32;
     
     let offset = 0;
     if (currentIndex === 0) {
@@ -126,14 +141,19 @@ function updateCarousel() {
     track.style.transform = `translateX(${offset}px)`;
 }
 
+// Event Listener nur auf Desktop aktiv
 prevBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + items.length) % items.length;
-    updateCarousel();
+    if (window.innerWidth > 768) {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        updateCarousel();
+    }
 });
 
 nextBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % items.length;
-    updateCarousel();
+    if (window.innerWidth > 768) {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+    }
 });
 
 // =======================

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt 1 - Paul Liebig</title>
+    <link rel="stylesheet" href="project 1.css">
+</head>
+<body>
+    <!-- Header mit Gradient und Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html" class="logo">
+                    <img src="./Media/PL Logo.svg" alt="Paul Liebig Logo">
+                </a>
+                <span class="logo-text">Paul Liebig</span>
+            </div>
+            
+            <nav class="navbar">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About me</a>
+                <a href="my work.html" class="nav-link">My Work</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+            </nav>
+
+            <button class="burger" aria-label="Menü öffnen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="project-main">
+        <div class="project-container">
+            <!-- Project Title -->
+            <h1 class="project-title">Projekt 1</h1>
+
+            <!-- Content Grid -->
+            <div class="project-grid">
+                <!-- Left Side: Video -->
+                <div class="video-section">
+                    <div class="video-container">
+                        <iframe 
+                            src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Right Side: Tools -->
+                <div class="tools-section">
+                    <h2 class="section-title">Used tools</h2>
+                    <div class="tools-grid">
+                        <img src="./Media/icons/Blender logo.png" alt="Blender" class="tool-icon">
+                        <img src="./Media/icons/After Effects.png" alt="After Effects" class="tool-icon">
+                        <img src="./Media/icons/Premier Pro.png" alt="Premiere Pro" class="tool-icon">
+                        <img src="./Media/icons/Photoshop.png" alt="Photoshop" class="tool-icon">
+                    </div>
+                </div>
+            </div>
+
+            <!-- About the Project Section -->
+            <div class="about-section">
+                <h2 class="section-title">About the projekt</h2>
+                <div class="about-text">
+                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+                </div>
+            </div>
+
+            <!-- Behind the Scenes Images -->
+            <div class="images-grid">
+                <div class="image-item">
+                    <img src="./Media/placeholder-bild1.jpg" alt="Bild 1">
+                    <span class="image-label">Bild 1</span>
+                </div>
+                <div class="image-item">
+                    <img src="./Media/placeholder-bild2.jpg" alt="Bild 2">
+                    <span class="image-label">Bild 2</span>
+                </div>
+                <div class="image-item">
+                    <img src="./Media/placeholder-bild3.jpg" alt="Bild 3">
+                    <span class="image-label">Bild 3</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="project 1.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -25,7 +25,7 @@ function updateParallax() {
     // Layer 2 scrollt direkt mit - ist der Haupthintergrund
     const scrollFactor = scrollY * 0.8; // Scrollt fast 1:1 mit
     
-    layer2.style.transform = `translateY(${-scrollFactor}px)`;}*/
+    layer2.style.transform = `translateY(${-scrollFactor}px)`;
     
     // Layer 1 bleibt statisch und füllt Lücken
     // Optional: Leichte Mausbewegung für Layer 1
@@ -34,7 +34,7 @@ function updateParallax() {
         translateX(${mouseX * mouseFactor * 0.3}px)
         translateY(${mouseY * mouseFactor * 0.3}px)
     `;
-
+}*/
 
 // =======================
 // INTERSECTION OBSERVER FOR PROJECT BOXES
