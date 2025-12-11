@@ -1,4 +1,4 @@
-// =======================
+// ======================= 
 // PARALLAX EFFECT
 // =======================
 let mouseX = 0;
@@ -84,15 +84,14 @@ const carouselTitle = document.getElementById('carouselTitle');
 let currentIndex = 0;
 let isCarouselMode = false;
 let carouselLockPosition = 0;
-let wheelDelta = 0;
 let isAnimating = false;
 
-// --- New state for fast-sequential wheel processing ---
-let wheelBuffer = 0;                // accumulated normalized delta
-let lastWheelChange = 0;            // timestamp of last wheel-initiated slide change
-let wheelCooldown = 100;            // ms between sequential wheel-driven changes (short for fast feel)
-const MAX_WHEEL_DELTA = 200;        // clamp per-event delta (prevents huge spikes)
-const WHEEL_STEP_THRESHOLD = 150;   // original threshold idea (use to decide a single "step") - preserved feel
+// Wheel settings for mouse
+let wheelBuffer = 0;
+let lastWheelChange = 0;
+const wheelCooldown = 100;
+const MAX_WHEEL_DELTA = 200;
+const WHEEL_STEP_THRESHOLD = 150;
 
 function updateCarousel() {
     const isMobile = window.innerWidth <= 768;
@@ -117,149 +116,144 @@ function updateCarousel() {
     const activeWidth = 600;
     const gap = 32;
 
-    let offset = 0;
-    if (currentIndex === 0) {
-        offset = (window.innerWidth / 2) - (activeWidth / 2);
-    } else {
-        offset = (window.innerWidth / 2) - (activeWidth / 2) - (currentIndex * (itemWidth + gap));
-    }
-
+    let offset = (window.innerWidth / 2) - (activeWidth / 2) - (currentIndex * (itemWidth + gap));
     track.style.transform = `translateX(${offset}px)`;
 }
 
 // =======================
-// CAROUSEL SCROLL HIJACKING (fast sequential wheel, preserves existing animations)
+// DETECT DEVICE TYPE
+// =======================
+function isTouchpadEvent(e) {
+    // Pixel-based and small deltas are usually touchpad
+    return e.deltaMode === 0 && Math.abs(e.deltaY) < 50;
+}
+
+// =======================
+// CAROUSEL WHEEL HANDLERS
 // =======================
 function aboutFullyVisible() {
     const rect = aboutSection.getBoundingClientRect();
     return rect.top <= 0 && rect.bottom >= window.innerHeight;
 }
 
+// Mouse wheel handler (discrete steps)
+function handleMouseWheel(e) {
+    e.preventDefault();
+    const now = Date.now();
+    window.scrollTo(0, carouselLockPosition);
+
+    let delta = Math.max(-MAX_WHEEL_DELTA, Math.min(MAX_WHEEL_DELTA, e.deltaY));
+
+    // Ignore extra scroll past last slide
+    if (currentIndex === items.length - 1 && delta > 0) {
+        wheelBuffer = 0;
+        return;
+    }
+
+    wheelBuffer += delta;
+    const stepCount = Math.floor(Math.abs(wheelBuffer) / WHEEL_STEP_THRESHOLD);
+    if (stepCount === 0) return;
+
+    if (now - lastWheelChange < wheelCooldown) return;
+    lastWheelChange = now;
+
+    const direction = wheelBuffer > 0 ? 1 : -1;
+
+    if (direction === 1) { // scrolling down
+        if (currentIndex < items.length - 1) {
+            currentIndex++;
+            wheelBuffer -= WHEEL_STEP_THRESHOLD;
+            updateCarousel();
+            if (currentIndex === items.length - 1) {
+                carouselLockPosition = window.scrollY;
+                wheelBuffer = 0;
+            }
+        }
+    } else { // scrolling up
+        if (currentIndex > 0) {
+            currentIndex--;
+            wheelBuffer += WHEEL_STEP_THRESHOLD;
+            updateCarousel();
+        } else {
+            isCarouselMode = false;
+            wheelBuffer = 0;
+            return;
+        }
+    }
+    window.scrollTo(0, carouselLockPosition);
+}
+
+// Touchpad handler (smooth, no jitter)
+let touchpadBuffer = 0;
+function handleTouchpadWheel(e) {
+    e.preventDefault();
+    window.scrollTo(0, carouselLockPosition);
+
+    // Small delta accumulation for smooth slide change
+    const delta = e.deltaY;
+    touchpadBuffer += delta;
+
+    if (touchpadBuffer > WHEEL_STEP_THRESHOLD) {
+        if (currentIndex < items.length - 1) {
+            currentIndex++;
+            updateCarousel();
+        }
+        touchpadBuffer = 0;
+        if (currentIndex === items.length - 1) carouselLockPosition = window.scrollY;
+    } else if (touchpadBuffer < -WHEEL_STEP_THRESHOLD) {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+        } else {
+            isCarouselMode = false;
+        }
+        touchpadBuffer = 0;
+    }
+
+    window.scrollTo(0, carouselLockPosition);
+}
+
+// Main wheel event
 window.addEventListener('wheel', (e) => {
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) return;
+    if (window.innerWidth <= 768) return;
 
     const fullyVisible = aboutFullyVisible();
-    const now = Date.now();
 
-    // ENTER: when about fully visible and user scrolls down into it
+    // Enter carousel
     if (fullyVisible && !isCarouselMode && e.deltaY > 0) {
         isCarouselMode = true;
         carouselLockPosition = window.scrollY;
         wheelBuffer = 0;
-        // lock scroll immediately
+        touchpadBuffer = 0;
         window.scrollTo(0, carouselLockPosition);
         e.preventDefault();
         return;
     }
 
-    // If not in carousel mode, do nothing special (allow page scroll)
     if (!isCarouselMode) return;
 
-    // At this point carousel mode is active -> suppress vertical movement
-    e.preventDefault();
-
-    // Keep page locked while we're navigating (unless we explicitly exit)
-    if (carouselLockPosition > 0) {
-        window.scrollTo(0, carouselLockPosition);
+    if (isTouchpadEvent(e)) {
+        handleTouchpadWheel(e);
+    } else {
+        handleMouseWheel(e);
     }
+});
 
-    // Normalize and clamp this event's delta to avoid huge spikes
-    const clamped = Math.max(-MAX_WHEEL_DELTA, Math.min(MAX_WHEEL_DELTA, e.deltaY));
-
-    // Accumulate into the wheel buffer
-    wheelBuffer += clamped;
-
-    // Decide how many logical steps are available based on threshold
-    // But for Option 2 we want sequential single-step processing:
-    // -> compute possibleSteps but only execute at most 1 step per cooldown interval (fast feel)
-    const possibleSteps = Math.floor(Math.abs(wheelBuffer) / WHEEL_STEP_THRESHOLD);
-    const direction = wheelBuffer > 0 ? 1 : (wheelBuffer < 0 ? -1 : 0);
-
-    // If no full step available yet, wait for more delta
-    if (possibleSteps === 0) return;
-
-    // If we are within the short wheel cooldown, ignore further immediate steps
-    if (now - lastWheelChange < wheelCooldown) {
-        // leave buffer intact for next events to process
-        return;
-    }
-
-    // Process exactly one step now (sequential), preserve rest of buffer for subsequent wheel events
-    lastWheelChange = now;
-
-    // DOWNWARDS: direction === 1
-    if (direction === 1) {
-        // if not at last slide, advance one
-        if (currentIndex < items.length - 1) {
-            // For wheel-driven transitions we bypass the long isAnimating lock, but still
-            // keep a short local lock by setting lastWheelChange; this allows fast sequential moves.
-            currentIndex = Math.min(items.length - 1, currentIndex + 1);
-            updateCarousel();
-            // subtract one logical step from buffer
-            wheelBuffer -= WHEEL_STEP_THRESHOLD;
-            // keep small defensive safety: if currentIndex reached last slide, allow exit on further delta
-            if (currentIndex === items.length - 1) {
-                // if buffer still positive and user continues scrolling down, exit carousel to page
-                // but only if buffer exceeds another step threshold
-                if (wheelBuffer >= WHEEL_STEP_THRESHOLD) {
-                    isCarouselMode = false;
-                    wheelBuffer = 0;
-                    // let browser handle leftover by scrolling by a fraction of original event (best-effort)
-                    window.scrollBy(0, e.deltaY);
-                }
-            }
-            // done
-            return;
-        } else {
-            // at last slide: exit carousel and allow normal page scroll
-            isCarouselMode = false;
-            wheelBuffer = 0;
-            window.scrollBy(0, e.deltaY);
-            return;
-        }
-    }
-
-    // UPWARDS: direction === -1
-    if (direction === -1) {
-        if (currentIndex > 0) {
-            currentIndex = Math.max(0, currentIndex - 1);
-            updateCarousel();
-            wheelBuffer += WHEEL_STEP_THRESHOLD; // subtract one step (since wheelBuffer negative)
-            // If we just reached index 0 and buffer still strongly negative -> exit to page scroll
-            if (currentIndex === 0) {
-                if (Math.abs(wheelBuffer) >= WHEEL_STEP_THRESHOLD) {
-                    isCarouselMode = false;
-                    wheelBuffer = 0;
-                    window.scrollBy(0, e.deltaY);
-                }
-            }
-            return;
-        } else {
-            // at first slide and scrolling up -> exit carousel and allow page scroll
-            isCarouselMode = false;
-            wheelBuffer = 0;
-            window.scrollBy(0, e.deltaY);
-            return;
-        }
-    }
-}, { passive: false });
-
-// Keep scroll locked during carousel (in case other scroll events try to change it)
+// Scroll lock listener
 window.addEventListener('scroll', () => {
-    if (isCarouselMode && carouselLockPosition > 0 && currentIndex > 0) {
+    if (isCarouselMode) {
         window.scrollTo(0, carouselLockPosition);
     }
 });
 
-// Arrow buttons - preserved behavior using isAnimating
+// Arrow buttons
 prevBtn.addEventListener('click', () => {
     if (window.innerWidth > 768 && !isAnimating) {
         isAnimating = true;
         currentIndex = Math.max(0, currentIndex - 1);
         updateCarousel();
         wheelBuffer = 0;
-
+        touchpadBuffer = 0;
         setTimeout(() => isAnimating = false, 600);
     }
 });
@@ -270,7 +264,7 @@ nextBtn.addEventListener('click', () => {
         currentIndex = Math.min(items.length - 1, currentIndex + 1);
         updateCarousel();
         wheelBuffer = 0;
-
+        touchpadBuffer = 0;
         setTimeout(() => isAnimating = false, 600);
     }
 });
@@ -285,8 +279,8 @@ window.addEventListener('resize', () => {
     isCarouselMode = false;
     carouselLockPosition = 0;
     currentIndex = 0;
-    wheelDelta = 0;
     wheelBuffer = 0;
+    touchpadBuffer = 0;
 });
 
 // =======================

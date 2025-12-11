@@ -12,6 +12,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overscroll-behavior: none; /* Prevents browser bounce & overscroll */
+}
+
+
 html {
     width: 100%;
     overflow-x: hidden;
