@@ -87,6 +87,13 @@ let carouselLockPosition = 0;
 let wheelDelta = 0;
 let isAnimating = false;
 
+// --- New state for fast-sequential wheel processing ---
+let wheelBuffer = 0;                // accumulated normalized delta
+let lastWheelChange = 0;            // timestamp of last wheel-initiated slide change
+let wheelCooldown = 100;            // ms between sequential wheel-driven changes (short for fast feel)
+const MAX_WHEEL_DELTA = 200;        // clamp per-event delta (prevents huge spikes)
+const WHEEL_STEP_THRESHOLD = 150;   // original threshold idea (use to decide a single "step") - preserved feel
+
 function updateCarousel() {
     const isMobile = window.innerWidth <= 768;
 
@@ -121,7 +128,7 @@ function updateCarousel() {
 }
 
 // =======================
-// CAROUSEL SCROLL HIJACKING (robust)
+// CAROUSEL SCROLL HIJACKING (fast sequential wheel, preserves existing animations)
 // =======================
 function aboutFullyVisible() {
     const rect = aboutSection.getBoundingClientRect();
@@ -132,78 +139,107 @@ window.addEventListener('wheel', (e) => {
     const isMobile = window.innerWidth <= 768;
     if (isMobile) return;
 
-    const threshold = 150;
     const fullyVisible = aboutFullyVisible();
+    const now = Date.now();
 
-    // Enter carousel mode when the about-section is fully visible and user scrolls down into it
+    // ENTER: when about fully visible and user scrolls down into it
     if (fullyVisible && !isCarouselMode && e.deltaY > 0) {
         isCarouselMode = true;
         carouselLockPosition = window.scrollY;
-        wheelDelta = 0;
+        wheelBuffer = 0;
         // lock scroll immediately
         window.scrollTo(0, carouselLockPosition);
         e.preventDefault();
         return;
     }
 
-    // If we're not in carousel mode, do nothing special (let the page scroll)
+    // If not in carousel mode, do nothing special (allow page scroll)
     if (!isCarouselMode) return;
 
-    // If carousel mode is active, always prevent default wheel (we control movement)
+    // At this point carousel mode is active -> suppress vertical movement
     e.preventDefault();
 
-    // Keep the page locked while we navigate items (unless we decide to exit)
+    // Keep page locked while we're navigating (unless we explicitly exit)
     if (carouselLockPosition > 0) {
         window.scrollTo(0, carouselLockPosition);
     }
 
-    // accumulate wheel
-    wheelDelta += e.deltaY;
+    // Normalize and clamp this event's delta to avoid huge spikes
+    const clamped = Math.max(-MAX_WHEEL_DELTA, Math.min(MAX_WHEEL_DELTA, e.deltaY));
 
-    if (Math.abs(wheelDelta) < threshold) {
-        // not enough movement yet to change item
+    // Accumulate into the wheel buffer
+    wheelBuffer += clamped;
+
+    // Decide how many logical steps are available based on threshold
+    // But for Option 2 we want sequential single-step processing:
+    // -> compute possibleSteps but only execute at most 1 step per cooldown interval (fast feel)
+    const possibleSteps = Math.floor(Math.abs(wheelBuffer) / WHEEL_STEP_THRESHOLD);
+    const direction = wheelBuffer > 0 ? 1 : (wheelBuffer < 0 ? -1 : 0);
+
+    // If no full step available yet, wait for more delta
+    if (possibleSteps === 0) return;
+
+    // If we are within the short wheel cooldown, ignore further immediate steps
+    if (now - lastWheelChange < wheelCooldown) {
+        // leave buffer intact for next events to process
         return;
     }
 
-    // DOWNWARDS: move forward in carousel or exit to page scroll if at last item
-    if (wheelDelta > 0) {
-        if (currentIndex < items.length - 1 && !isAnimating) {
-            isAnimating = true;
-            currentIndex++;
+    // Process exactly one step now (sequential), preserve rest of buffer for subsequent wheel events
+    lastWheelChange = now;
+
+    // DOWNWARDS: direction === 1
+    if (direction === 1) {
+        // if not at last slide, advance one
+        if (currentIndex < items.length - 1) {
+            // For wheel-driven transitions we bypass the long isAnimating lock, but still
+            // keep a short local lock by setting lastWheelChange; this allows fast sequential moves.
+            currentIndex = Math.min(items.length - 1, currentIndex + 1);
             updateCarousel();
-            wheelDelta = 0;
-            setTimeout(() => isAnimating = false, 600);
-            return;
-        } else if (currentIndex === items.length - 1) {
-            // we're at the end -> exit carousel and allow normal page scrolling downwards
-            isCarouselMode = false;
-            wheelDelta = 0;
-            // let the browser handle the scroll by re-dispatching the delta
-            window.scrollBy(0, e.deltaY);
+            // subtract one logical step from buffer
+            wheelBuffer -= WHEEL_STEP_THRESHOLD;
+            // keep small defensive safety: if currentIndex reached last slide, allow exit on further delta
+            if (currentIndex === items.length - 1) {
+                // if buffer still positive and user continues scrolling down, exit carousel to page
+                // but only if buffer exceeds another step threshold
+                if (wheelBuffer >= WHEEL_STEP_THRESHOLD) {
+                    isCarouselMode = false;
+                    wheelBuffer = 0;
+                    // let browser handle leftover by scrolling by a fraction of original event (best-effort)
+                    window.scrollBy(0, e.deltaY);
+                }
+            }
+            // done
             return;
         } else {
-            wheelDelta = 0;
+            // at last slide: exit carousel and allow normal page scroll
+            isCarouselMode = false;
+            wheelBuffer = 0;
+            window.scrollBy(0, e.deltaY);
             return;
         }
     }
 
-    // UPWARDS: move backward in carousel or exit to page scroll if at first item
-    if (wheelDelta < 0) {
-        if (currentIndex > 0 && !isAnimating) {
-            isAnimating = true;
-            currentIndex--;
+    // UPWARDS: direction === -1
+    if (direction === -1) {
+        if (currentIndex > 0) {
+            currentIndex = Math.max(0, currentIndex - 1);
             updateCarousel();
-            wheelDelta = 0;
-            setTimeout(() => isAnimating = false, 600);
-            return;
-        } else if (currentIndex === 0) {
-            // at first item -> exit carousel and allow normal page scrolling upwards
-            isCarouselMode = false;
-            wheelDelta = 0;
-            window.scrollBy(0, e.deltaY);
+            wheelBuffer += WHEEL_STEP_THRESHOLD; // subtract one step (since wheelBuffer negative)
+            // If we just reached index 0 and buffer still strongly negative -> exit to page scroll
+            if (currentIndex === 0) {
+                if (Math.abs(wheelBuffer) >= WHEEL_STEP_THRESHOLD) {
+                    isCarouselMode = false;
+                    wheelBuffer = 0;
+                    window.scrollBy(0, e.deltaY);
+                }
+            }
             return;
         } else {
-            wheelDelta = 0;
+            // at first slide and scrolling up -> exit carousel and allow page scroll
+            isCarouselMode = false;
+            wheelBuffer = 0;
+            window.scrollBy(0, e.deltaY);
             return;
         }
     }
@@ -216,13 +252,13 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Arrow buttons
+// Arrow buttons - preserved behavior using isAnimating
 prevBtn.addEventListener('click', () => {
     if (window.innerWidth > 768 && !isAnimating) {
         isAnimating = true;
         currentIndex = Math.max(0, currentIndex - 1);
         updateCarousel();
-        wheelDelta = 0;
+        wheelBuffer = 0;
 
         setTimeout(() => isAnimating = false, 600);
     }
@@ -233,7 +269,7 @@ nextBtn.addEventListener('click', () => {
         isAnimating = true;
         currentIndex = Math.min(items.length - 1, currentIndex + 1);
         updateCarousel();
-        wheelDelta = 0;
+        wheelBuffer = 0;
 
         setTimeout(() => isAnimating = false, 600);
     }
@@ -250,6 +286,7 @@ window.addEventListener('resize', () => {
     carouselLockPosition = 0;
     currentIndex = 0;
     wheelDelta = 0;
+    wheelBuffer = 0;
 });
 
 // =======================
