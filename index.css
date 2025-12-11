@@ -102,7 +102,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    height: 100vh;
+    height: 50vh; /* Reduziert von 100vh auf 50vh für snappier scroll */
     display: flex;
     align-items: center;
     padding-left: 5%;
@@ -184,7 +184,7 @@ body {
 .carousel-track {
     display: flex;
     gap: 2rem;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 2rem 0;
 }
 
@@ -194,7 +194,7 @@ body {
     height: 281px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid transparent;
     overflow: hidden;
     position: relative;
@@ -241,6 +241,7 @@ body {
 /* Mobile Optimierungen */
 @media (max-width: 768px) {
     .hero-section {
+        height: 30vh; /* Noch kürzer auf Mobile */
         padding: 0 1rem;
         align-items: center;
     }

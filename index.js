@@ -43,7 +43,6 @@ function updateParallax() {
         translateY(${mouseY * mouseFactor}px)
     `;
 
-    // Layer 3 bewegt sich langsamer nach oben, um unteren Rand zu verbergen
     layer3.style.transform = `
         translate(-50%, -50%)
         translateY(${-scrollFactor * 0.5}px)
@@ -57,14 +56,12 @@ function updateParallax() {
 // =======================
 function updateVisibility() {
     const isMobile = window.innerWidth <= 768;
-    const scrollThreshold = window.innerHeight * 0.7;
+    const scrollThreshold = window.innerHeight * 0.3;
 
     if (isMobile) {
-        // Auf Mobile: Scroll-Effekt wird deaktiviert, Navbar bleibt unsichtbar
-        aboutSection.classList.add('visible'); // About-Content darf trotzdem erscheinen
-        navbar.classList.remove('visible');    // Kein automatisches Einblenden
+        aboutSection.classList.add('visible');
+        navbar.classList.remove('visible');
     } else {
-        // Auf Desktop: klassischer Scroll-Fade-In
         if (scrollY >= scrollThreshold) {
             aboutSection.classList.add('visible');
             navbar.classList.add('visible');
@@ -74,8 +71,6 @@ function updateVisibility() {
         }
     }
 }
-
-
 
 // =======================
 // CAROUSEL LOGIC
@@ -87,50 +82,34 @@ const nextBtn = document.getElementById('nextBtn');
 const carouselTitle = document.getElementById('carouselTitle');
 
 let currentIndex = 0;
+let isCarouselMode = false;
+let carouselLockPosition = 0;
+let wheelDelta = 0;
+let isAnimating = false;
 
 function updateCarousel() {
     const isMobile = window.innerWidth <= 768;
-    
-    // Mobile: Carousel-Funktionalität deaktivieren
+
     if (isMobile) {
-        // Alle Items als "active" behandeln (keine spezielle Hervorhebung)
         items.forEach(item => item.classList.remove('active'));
-        
-        // Title bleibt statisch
         carouselTitle.textContent = 'About me';
-        
-        // Kein Transform
         track.style.transform = 'translateX(0)';
         return;
     }
-    
-    // Desktop: Normal Carousel
-    // Entferne active von allen Items
+
     items.forEach(item => item.classList.remove('active'));
-    
-    // Füge active zum aktuellen Item hinzu
     items[currentIndex].classList.add('active');
 
-    // Update Title mit Animation
     const currentTitle = items[currentIndex].getAttribute('data-title');
-    
-    // Trigger Animation durch Entfernen und Hinzufügen
     carouselTitle.style.animation = 'none';
-    
-    // Force reflow
     void carouselTitle.offsetWidth;
-    
-    // Setze neue Werte
     carouselTitle.textContent = currentTitle;
-    
-    // Starte Animation
     carouselTitle.style.animation = 'fadeInScale 0.4s ease';
 
-    // Berechne Offset für Zentrierung
     const itemWidth = 500;
     const activeWidth = 600;
     const gap = 32;
-    
+
     let offset = 0;
     if (currentIndex === 0) {
         offset = (window.innerWidth / 2) - (activeWidth / 2);
@@ -141,33 +120,140 @@ function updateCarousel() {
     track.style.transform = `translateX(${offset}px)`;
 }
 
-// Event Listener nur auf Desktop aktiv
+// =======================
+// CAROUSEL SCROLL HIJACKING (robust)
+// =======================
+function aboutFullyVisible() {
+    const rect = aboutSection.getBoundingClientRect();
+    return rect.top <= 0 && rect.bottom >= window.innerHeight;
+}
+
+window.addEventListener('wheel', (e) => {
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) return;
+
+    const threshold = 150;
+    const fullyVisible = aboutFullyVisible();
+
+    // Enter carousel mode when the about-section is fully visible and user scrolls down into it
+    if (fullyVisible && !isCarouselMode && e.deltaY > 0) {
+        isCarouselMode = true;
+        carouselLockPosition = window.scrollY;
+        wheelDelta = 0;
+        // lock scroll immediately
+        window.scrollTo(0, carouselLockPosition);
+        e.preventDefault();
+        return;
+    }
+
+    // If we're not in carousel mode, do nothing special (let the page scroll)
+    if (!isCarouselMode) return;
+
+    // If carousel mode is active, always prevent default wheel (we control movement)
+    e.preventDefault();
+
+    // Keep the page locked while we navigate items (unless we decide to exit)
+    if (carouselLockPosition > 0) {
+        window.scrollTo(0, carouselLockPosition);
+    }
+
+    // accumulate wheel
+    wheelDelta += e.deltaY;
+
+    if (Math.abs(wheelDelta) < threshold) {
+        // not enough movement yet to change item
+        return;
+    }
+
+    // DOWNWARDS: move forward in carousel or exit to page scroll if at last item
+    if (wheelDelta > 0) {
+        if (currentIndex < items.length - 1 && !isAnimating) {
+            isAnimating = true;
+            currentIndex++;
+            updateCarousel();
+            wheelDelta = 0;
+            setTimeout(() => isAnimating = false, 600);
+            return;
+        } else if (currentIndex === items.length - 1) {
+            // we're at the end -> exit carousel and allow normal page scrolling downwards
+            isCarouselMode = false;
+            wheelDelta = 0;
+            // let the browser handle the scroll by re-dispatching the delta
+            window.scrollBy(0, e.deltaY);
+            return;
+        } else {
+            wheelDelta = 0;
+            return;
+        }
+    }
+
+    // UPWARDS: move backward in carousel or exit to page scroll if at first item
+    if (wheelDelta < 0) {
+        if (currentIndex > 0 && !isAnimating) {
+            isAnimating = true;
+            currentIndex--;
+            updateCarousel();
+            wheelDelta = 0;
+            setTimeout(() => isAnimating = false, 600);
+            return;
+        } else if (currentIndex === 0) {
+            // at first item -> exit carousel and allow normal page scrolling upwards
+            isCarouselMode = false;
+            wheelDelta = 0;
+            window.scrollBy(0, e.deltaY);
+            return;
+        } else {
+            wheelDelta = 0;
+            return;
+        }
+    }
+}, { passive: false });
+
+// Keep scroll locked during carousel (in case other scroll events try to change it)
+window.addEventListener('scroll', () => {
+    if (isCarouselMode && carouselLockPosition > 0 && currentIndex > 0) {
+        window.scrollTo(0, carouselLockPosition);
+    }
+});
+
+// Arrow buttons
 prevBtn.addEventListener('click', () => {
-    if (window.innerWidth > 768) {
-        currentIndex = (currentIndex - 1 + items.length) % items.length;
+    if (window.innerWidth > 768 && !isAnimating) {
+        isAnimating = true;
+        currentIndex = Math.max(0, currentIndex - 1);
         updateCarousel();
+        wheelDelta = 0;
+
+        setTimeout(() => isAnimating = false, 600);
     }
 });
 
 nextBtn.addEventListener('click', () => {
-    if (window.innerWidth > 768) {
-        currentIndex = (currentIndex + 1) % items.length;
+    if (window.innerWidth > 768 && !isAnimating) {
+        isAnimating = true;
+        currentIndex = Math.min(items.length - 1, currentIndex + 1);
         updateCarousel();
+        wheelDelta = 0;
+
+        setTimeout(() => isAnimating = false, 600);
     }
 });
 
-// =======================
-// INITIALIZE
-// =======================
+// INIT
 updateCarousel();
 updateParallax();
 updateVisibility();
 
-// Resize Handler
-window.addEventListener('resize', updateCarousel);
+window.addEventListener('resize', () => {
+    updateCarousel();
+    isCarouselMode = false;
+    carouselLockPosition = 0;
+    currentIndex = 0;
+    wheelDelta = 0;
+});
 
 // =======================
-// BURGER MENU (GALLERY SPECIFIC)
+// BURGER MENU
 // =======================
 document.addEventListener('DOMContentLoaded', () => {
     const burger = document.querySelector('.burger');
