@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt 1 - Paul Liebig</title>
+    <link rel="stylesheet" href="project 1.css">
+</head>
+<body>
+    <!-- Header mit Gradient und Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html" class="logo">
+                    <img src="./Media/PL Logo.svg" alt="Paul Liebig Logo">
+                </a>
+                <span class="logo-text">Paul Liebig</span>
+            </div>
+            
+            <nav class="navbar">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About me</a>
+                <a href="my work.html" class="nav-link">My Work</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+            </nav>
+
+            <button class="burger" aria-label="Menü öffnen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="project-main">
+        <div class="project-container">
+            <!-- Project Title -->
+            <h1 class="project-title">Projekt 1</h1>
+
+            <!-- Content Grid -->
+            <div class="project-grid">
+                <!-- Left Side: Video -->
+                <div class="video-section">
+                    <div class="video-container">
+                        <iframe 
+                            src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Right Side: Tools -->
+                <div class="tools-section">
+                    <h2 class="section-title">Used tools</h2>
+                    <div class="tools-grid">
+                        <img src="./Media/icons/Blender logo.png" alt="Blender" class="tool-icon">
+                        <img src="./Media/icons/After Effects.png" alt="After Effects" class="tool-icon">
+                        <img src="./Media/icons/Premier Pro.png" alt="Premiere Pro" class="tool-icon">
+                        <img src="./Media/icons/Photoshop.png" alt="Photoshop" class="tool-icon">
+                    </div>
+                </div>
+            </div>
+
+            <!-- About the Project Section -->
+            <div class="about-section">
+                <h2 class="section-title">About the projekt</h2>
+                <div class="about-text">
+                    <h3>Rigged Motion Studios – 3D-Werbespot für eine Bierbrauerei</h3>
+                    
+                    <h4>Konzept und Umsetzung</h4>
+                    <p>Für unser Start-up Rigged Motion Studios entwickelten wir eine ungewöhnliche Marketingstrategie: Ein 3D-animiertes Werbevideo mit einem Platzhalterobjekt, das via Auktion an den Höchstbietenden versteigert wurde. Das Konzept ermöglichte es uns, unsere Fähigkeiten zu demonstrieren, ohne bereits Kunden vorweisen zu müssen.</p>
+                    
+                    <p>Die Idee basierte auf einer UFO-Thematik, mit der wir uns bewusst von konventioneller Werbung absetzen wollten. Nach intensivem Storyboarding und Rough-Animation folgten Dreharbeiten im Filmstudio der HKB in Bern. Dabei entstand ein atmosphärisches Video, das Realfilm-Aufnahmen mit 3D-animierten Elementen kombiniert – die Hauptdarstellerin wurde mittels Rotoscoping ausgeschnitten und in eine komplett in Blender erstellte Waldszene integriert.</p>
+                    
+                    <p>Parallel zur Videoproduktion entwickelten wir eine minimalistische Website mit responsivem Design, die als digitale Visitenkarte und Auktionsplattform diente.</p>
+                    
+                    <h4>Vom Dummy zum echten Produkt</h4>
+                    <p>Nach zwei Monaten intensiver Kaltakquise gelang der Durchbruch: Eine Bierbrauerei aus dem Berner Oberland gewann die Auktion und wurde unser erster Kunde. Das ursprüngliche Platzhalterobjekt wurde durch eine detailgetreue 3D-Scan-Reproduktion der Bierflasche ersetzt, das Sounddesign überarbeitet und der finale Shot komplett neu gedreht.</p>
+                    
+                    <p>Der angepasste Spot feierte seine Premiere an den Solothurner Biertagen und erhielt dort durchweg positives Feedback vom Publikum.</p>
+                    
+                    <h4>Technische Umsetzung</h4>
+                    <ul>
+                        <li>3D-Animation und Rendering in Blender</li>
+                        <li>Rotoscoping und Compositing in After Effects</li>
+                        <li>Finaler Schnitt in Premiere Pro</li>
+                        <li>3D-Scanning und Produktintegration</li>
+                        <li>Eigens komponierter Jingle und maßgeschneidertes Sounddesign</li>
+                        <li>Responsive Website mit JavaScript-Framework</li>
+                    </ul>
+                    
+                    <p class="closing-statement">Das Projekt zeigt die vollständige Pipeline von der Konzeption über die Produktion bis zur marktfähigen Kundenanpassung – und beweist, dass kreative Ansätze auch ohne bestehendes Portfolio Türen öffnen können.</p>
+                </div>
+            </div>
+
+            <!-- Behind the Scenes Images -->
+            <div class="images-grid">
+                <div class="image-item">
+                    <img src="./Media/placeholder-bild1.jpg" alt="Bild 1">
+                    <span class="image-label">Bild 1</span>
+                </div>
+                <div class="image-item">
+                    <img src="./Media/placeholder-bild2.jpg" alt="Bild 2">
+                    <span class="image-label">Bild 2</span>
+                </div>
+                <div class="image-item">
+                    <img src="./Media/placeholder-bild3.jpg" alt="Bild 3">
+                    <span class="image-label">Bild 3</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="project.js"></script>
+</body>
+</html>
