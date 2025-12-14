@@ -153,4 +153,16 @@ document.addEventListener('DOMContentLoaded', () => {
     animatedBoxes.forEach((box, index) => {
         box.style.transitionDelay = `${index * 0.1}s`;
     });
+
+    // Video Loop with 5 Second Pause
+    const modelingVideo = document.getElementById('modeling-video');
+    if (modelingVideo) {
+        modelingVideo.addEventListener('ended', () => {
+            // Pause at last frame for 5 seconds
+            setTimeout(() => {
+                modelingVideo.currentTime = 0;
+                modelingVideo.play();
+            }, 5000); // 5 second pause
+        });
+    }
 });

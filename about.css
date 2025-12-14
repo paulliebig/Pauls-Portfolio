@@ -270,10 +270,11 @@
     width: 100%;
 }
 
-.single-image img {
+.single-image video {
     width: 100%;
     height: auto;
     display: block;
+    object-fit: cover;
 }
 
 /* ======================
