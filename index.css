@@ -233,10 +233,8 @@ body {
 }
 
 .carousel-item p {
-    font-size: 1.1rem;
     color: #ccc;
     text-align: center;
-    line-height: 1.5;
     margin-bottom: 1rem;
 }
 

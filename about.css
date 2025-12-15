@@ -70,8 +70,6 @@
 }
 
 .intro-box p {
-    font-size: 1.1rem;
-    line-height: 1.6;
     color: #ddd;
 }
 
@@ -106,8 +104,6 @@
 
 .description-box {
     grid-column: 1 / -1;
-    font-size: 1.6rem;
-    line-height: 1.2;
     color: #ddd;
 }
 
@@ -229,8 +225,6 @@
 }
 
 .info-box p {
-    font-size: 1.1rem;
-    line-height: 1.8;
     color: #ddd;
 }
 
