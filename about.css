@@ -106,8 +106,8 @@
 
 .description-box {
     grid-column: 1 / -1;
-    font-size: 1.2rem;
-    line-height: 1.8;
+    font-size: 1.6rem;
+    line-height: 1.2;
     color: #ddd;
 }
 
