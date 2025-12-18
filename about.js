@@ -107,18 +107,8 @@ function updateActiveSlide() {
 // =======================
 // PARALLAX EFFECT ON IMAGES
 // =======================
-const images = document.querySelectorAll('.image-box img, .single-image img, .branded-image img');
+// Parallax effect disabled - images stay fixed in their boxes
 
-window.addEventListener('scroll', () => {
-    images.forEach(img => {
-        const rect = img.getBoundingClientRect();
-        
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            const yPos = (rect.top - window.innerHeight) * 0.1;
-            img.style.transform = `translateY(${yPos}px)`;
-        }
-    });
-});
 
 // =======================
 // BURGER MENU
