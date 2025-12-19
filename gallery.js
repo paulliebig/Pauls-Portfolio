@@ -49,40 +49,127 @@ const projects = [
     {
         category: "VFX",
         title: "Project Alpha",
-        description: "Visual effects for a commercial campaign featuring particle simulations.",
-        image: "./Media/projects/project1.jpg"
+        description: "Visual effects for a commercial campaign featuring particle simulations and advanced compositing techniques. This project showcases dynamic lighting and realistic physics simulations.",
+        image: "./Media/projects/project1.jpg",
+        videoId: "yeLx_LZbCbM" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "3D Animation",
         title: "Character Design",
-        description: "Fully rigged 3D character with realistic textures and animations.",
-        image: "./Media/projects/project2.jpg"
+        description: "Fully rigged 3D character with realistic textures and animations. Created using advanced rigging techniques and procedural texturing for maximum flexibility.",
+        image: "./Media/projects/project2.jpg",
+        videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "Motion Design",
         title: "Brand Identity",
-        description: "Animated logo and brand elements for a tech startup.",
-        image: "./Media/projects/project3.jpg"
+        description: "Animated logo and brand elements for a tech startup. Features smooth transitions and modern design principles aligned with the brand's vision.",
+        image: "./Media/projects/project3.jpg",
+        videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "3D Visualization",
         title: "Architectural Render",
-        description: "Photorealistic architectural visualization for real estate.",
-        image: "./Media/projects/project4.jpg"
+        description: "Photorealistic architectural visualization for real estate. Combines accurate lighting simulation with high-quality materials and textures.",
+        image: "./Media/projects/project4.jpg",
+        videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "VFX",
         title: "Explosion Simulation",
-        description: "High-quality explosion effects with dynamic lighting.",
-        image: "./Media/projects/project5.jpg"
+        description: "High-quality explosion effects with dynamic lighting and particle systems. Features realistic shockwaves and debris simulation.",
+        image: "./Media/projects/project5.jpg",
+        videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "Motion Design",
         title: "Music Video",
-        description: "Abstract motion graphics synchronized with music.",
-        image: "./Media/projects/project6.jpg"
+        description: "Abstract motion graphics synchronized with music. Created using a combination of 2D and 3D techniques for a unique visual experience.",
+        image: "./Media/projects/project6.jpg",
+        videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     }
 ];
+
+// =======================
+// LIGHTBOX
+// =======================
+let currentLightbox = null;
+
+function createLightbox() {
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Schließen"></button>
+            <div class="lightbox-video">
+                <iframe src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="lightbox-text">
+                <div class="lightbox-category"></div>
+                <h2 class="lightbox-title"></h2>
+                <p class="lightbox-description"></p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(lightbox);
+    return lightbox;
+}
+
+function openLightbox(project) {
+    if (!currentLightbox) {
+        currentLightbox = createLightbox();
+        
+        // Close button
+        const closeBtn = currentLightbox.querySelector('.lightbox-close');
+        closeBtn.addEventListener('click', closeLightbox);
+        
+        // Close on background click
+        currentLightbox.addEventListener('click', (e) => {
+            if (e.target === currentLightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Close on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && currentLightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    }
+    
+    // Update content
+    const iframe = currentLightbox.querySelector('iframe');
+    const category = currentLightbox.querySelector('.lightbox-category');
+    const title = currentLightbox.querySelector('.lightbox-title');
+    const description = currentLightbox.querySelector('.lightbox-description');
+    
+    iframe.src = `https://www.youtube.com/embed/${project.videoId}?autoplay=1`;
+    category.textContent = project.category;
+    title.textContent = project.title;
+    description.textContent = project.description;
+    
+    // Show lightbox
+    setTimeout(() => {
+        currentLightbox.classList.add('active');
+    }, 10);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    if (!currentLightbox) return;
+    
+    currentLightbox.classList.remove('active');
+    
+    // Stop video
+    const iframe = currentLightbox.querySelector('iframe');
+    iframe.src = '';
+    
+    // Re-enable body scroll
+    document.body.style.overflow = '';
+}
 
 // =======================
 // RENDER PROJECTS
@@ -108,6 +195,11 @@ function renderProjects() {
             </div>
         `;
         
+        // Add click event
+        card.addEventListener('click', () => {
+            openLightbox(project);
+        });
+        
         workGrid.appendChild(card);
     });
 }
@@ -120,8 +212,6 @@ renderProjects();
 
 // Resize Handler
 window.addEventListener('resize', updateParallax);
-
-// Am Ende von gallery.js hinzufügen:
 
 // =======================
 // BURGER MENU (GALLERY SPECIFIC)
