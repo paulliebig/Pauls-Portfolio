@@ -58,17 +58,14 @@ function updateVisibility() {
     const isMobile = window.innerWidth <= 768;
     const scrollThreshold = window.innerHeight * 0.3;
 
-    if (isMobile) {
+    if (scrollY >= scrollThreshold) {
         aboutSection.classList.add('visible');
-        navbar.classList.remove('visible');
-    } else {
-        if (scrollY >= scrollThreshold) {
-            aboutSection.classList.add('visible');
+        if (!isMobile) {
             navbar.classList.add('visible');
-        } else {
-            aboutSection.classList.remove('visible');
-            navbar.classList.remove('visible');
         }
+    } else {
+        aboutSection.classList.remove('visible');
+        navbar.classList.remove('visible');
     }
 }
 
