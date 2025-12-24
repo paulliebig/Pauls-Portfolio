@@ -47,44 +47,44 @@ function updateParallax() {
 // =======================
 const projects = [
     {
-        category: "VFX",
-        title: "Project Alpha",
-        description: "Visual effects for a commercial campaign featuring particle simulations and advanced compositing techniques. This project showcases dynamic lighting and realistic physics simulations.",
-        image: "./Media/projects/project1.jpg",
+        category: "3D Animation",
+        title: "The Crown's Escape",
+        description: "Ein 3D-animierter Kurzfilm über ein kleines Skelett, dass versucht die Krone des bösen Königs zu stehlen. Der Film kombiniert humorvolle Elemente mit spannender Action. Er enstand zu Beginn meines Studiums und zeigt meine frühen Fähigkeiten in 3D-Modellierung, Animation und Storytelling.",
+        image: "./Media/gallery thumbnails/crwons_escape_tn.jpg",
         videoId: "yeLx_LZbCbM" // Ersetze mit deiner YouTube Video ID
     },
     {
-        category: "3D Animation",
-        title: "Character Design",
-        description: "Fully rigged 3D character with realistic textures and animations. Created using advanced rigging techniques and procedural texturing for maximum flexibility.",
+        category: "Platzhalter",
+        title: "Projekt 2",
+        description: "Platz für Zukunftige Projekte.",
         image: "./Media/projects/project2.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
-        category: "Motion Design",
-        title: "Brand Identity",
-        description: "Animated logo and brand elements for a tech startup. Features smooth transitions and modern design principles aligned with the brand's vision.",
+        category: "Platzhalter",
+        title: "Projekt 3",
+        description: "Platz für Zukunftige Projekte.",
         image: "./Media/projects/project3.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
-        category: "3D Visualization",
-        title: "Architectural Render",
-        description: "Photorealistic architectural visualization for real estate. Combines accurate lighting simulation with high-quality materials and textures.",
+        category: "Platzhalter",
+        title: "Projekt 4",
+        description: "Platz für Zukunftige Projekte.",
         image: "./Media/projects/project4.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
-        category: "VFX",
-        title: "Explosion Simulation",
-        description: "High-quality explosion effects with dynamic lighting and particle systems. Features realistic shockwaves and debris simulation.",
+        category: "Platzhalter",
+        title: "Projekt 5",
+        description: "Platz für Zukunftige Projekte.",
         image: "./Media/projects/project5.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
-        category: "Motion Design",
-        title: "Music Video",
-        description: "Abstract motion graphics synchronized with music. Created using a combination of 2D and 3D techniques for a unique visual experience.",
+        category: "Platzhalter",
+        title: "Projekt 6",
+        description: "Platz für Zukunftige Projekte.",
         image: "./Media/projects/project6.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     }

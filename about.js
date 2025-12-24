@@ -155,4 +155,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 5000); // 5 second pause
         });
     }
+
+    // Business Card Touch/Tap Handler for Mobile
+    const businessCard = document.querySelector('.business-card');
+    if (businessCard) {
+        let isFlipped = false;
+
+        businessCard.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            isFlipped = !isFlipped;
+            
+            if (isFlipped) {
+                businessCard.classList.add('flipped');
+            } else {
+                businessCard.classList.remove('flipped');
+            }
+        }, { passive: false });
+
+        businessCard.addEventListener('click', () => {
+            isFlipped = !isFlipped;
+            
+            if (isFlipped) {
+                businessCard.classList.add('flipped');
+            } else {
+                businessCard.classList.remove('flipped');
+            }
+        });
+    }
 });

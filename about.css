@@ -540,6 +540,15 @@
     transform: rotateY(0deg);
 }
 
+/* Touch/Tap Handler for Mobile - Flipped State */
+.business-card.flipped .card-front {
+    transform: rotateY(180deg);
+}
+
+.business-card.flipped .card-back {
+    transform: rotateY(0deg);
+}
+
 .card-logo {
     width: 80px;
     height: 80px;
@@ -634,20 +643,26 @@
     }
 }
 
-.business-card:hover ~ .card-hint,
-.business-card:hover .card-hint {
-    animation: fadeOut 0.3s ease-in-out forwards;
+/* Text Display Control */
+.desktop-text {
+    display: block;
 }
 
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
+.mobile-text {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .desktop-text {
         display: none;
     }
+
+    .mobile-text {
+        display: block;
+    }
 }
+
+
 
 /* Mobile Business Card */
 @media (max-width: 768px) {
