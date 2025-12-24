@@ -33,13 +33,7 @@ function updateParallax() {
         translateY(${mouseY * mouseFactor * 0.5}px)
     `;
 
-    // Layer 2 - Video
-    layer2.style.transform = `
-        translate(-50%, -50%)
-        translateY(${-scrollFactor * 0.6}px)
-        translateX(${mouseX * mouseFactor}px)
-        translateY(${mouseY * mouseFactor}px)
-    `;
+   
 }
 
 // =======================
