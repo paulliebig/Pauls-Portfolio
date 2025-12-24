@@ -1,4 +1,43 @@
 // ======================= 
+// VIDEO SOURCE SELECTION (MOBILE/DESKTOP)
+// =======================
+function selectVideoSource() {
+    const video = document.querySelector('#layer2 video');
+    const desktopSource = document.querySelector('.desktop-source');
+    const mobileSource = document.querySelector('.mobile-source');
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Mobile view - use mobile source
+        video.src = mobileSource.src;
+    } else {
+        // Desktop view - use desktop source
+        video.src = desktopSource.src;
+    }
+    video.load();
+    
+    // Force play on mobile devices (autoplay is often blocked)
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+                console.log('Video is playing');
+            })
+            .catch(error => {
+                console.log('Autoplay prevented:', error);
+                // Add click listener to play video on first user interaction
+                document.addEventListener('click', () => {
+                    video.play();
+                }, { once: true });
+            });
+    }
+}
+
+// Call on load and window resize
+window.addEventListener('load', selectVideoSource);
+window.addEventListener('resize', selectVideoSource);
+
+// ======================= 
 // PARALLAX EFFECT
 // =======================
 let mouseX = 0;
@@ -11,17 +50,21 @@ const layer3 = document.getElementById('layer3');
 const aboutSection = document.querySelector('.about-section');
 const navbar = document.querySelector('.navbar');
 
-// Mouse Movement Parallax
+// Mouse Movement Parallax - disabled on mobile
 document.addEventListener('mousemove', (e) => {
-    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    updateParallax();
+    if (window.innerWidth > 768) {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        updateParallax();
+    }
 });
 
-// Scroll Parallax
+// Scroll Parallax - disabled on mobile
 window.addEventListener('scroll', () => {
     scrollY = window.scrollY;
-    updateParallax();
+    if (window.innerWidth > 768) {
+        updateParallax();
+    }
     updateVisibility();
 });
 

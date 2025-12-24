@@ -67,7 +67,7 @@ body {
 
 /* Layer Backgrounds */
 #layer1 {
-    background-image: url('./Media/layer 1.png');
+    background-image: url('./Media/layer 1.jpg');
     z-index: 1;
 }
 
@@ -259,20 +259,36 @@ body {
 
 /* Mobile Optimierungen */
 @media (max-width: 768px) {
-    /* Mobile Layer Bilder */
+    /* Hide all layers except layer 2 on mobile */
+    #layer1 {
+        display: none;
+    }
+
     #layer2 {
-        background-image: url('./Media/layer_2_mobile.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        background: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        transform: none !important;
     }
 
     #layer2 video {
-        display: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     #layer3 {
         display: none;
+    }
+
+    /* Disable parallax transforms on mobile */
+    .parallax-layer {
+        transform: none !important;
     }
 
     .hero-section {

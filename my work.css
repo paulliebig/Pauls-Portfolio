@@ -81,7 +81,7 @@ main {
 
 /* Layer Backgrounds */
 #layer1 {
-    background-image: url('./Media/layer 1.png');
+    background-image: url('./Media/layer 1.jpg');
     background-size: cover;
     background-position: center;
     z-index: 1;
