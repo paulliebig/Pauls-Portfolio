@@ -51,35 +51,35 @@ const projects = [
         category: "Platzhalter",
         title: "Projekt 2",
         description: "Platz für Zukunftige Projekte.",
-        image: "./Media/projects/project2.jpg",
+        image: "./Media/Platzhalter.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "Platzhalter",
         title: "Projekt 3",
         description: "Platz für Zukunftige Projekte.",
-        image: "./Media/projects/project3.jpg",
+        image: "./Media/Platzhalter.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "Platzhalter",
         title: "Projekt 4",
         description: "Platz für Zukunftige Projekte.",
-        image: "./Media/projects/project4.jpg",
+        image: "./Media/Platzhalter.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "Platzhalter",
         title: "Projekt 5",
         description: "Platz für Zukunftige Projekte.",
-        image: "./Media/projects/project5.jpg",
+        image: "./Media/Platzhalter.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     },
     {
         category: "Platzhalter",
         title: "Projekt 6",
         description: "Platz für Zukunftige Projekte.",
-        image: "./Media/projects/project6.jpg",
+        image: "./Media/Platzhalter.jpg",
         videoId: "dQw4w9WgXcQ" // Ersetze mit deiner YouTube Video ID
     }
 ];
