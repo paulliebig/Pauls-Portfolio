@@ -82,6 +82,7 @@ Einige Sektionen enthalten noch Platzhalter-Inhalte:
 - **Gallery**: Zusätzliche Arbeiten werden ergänzt, sobald sie abgeschlossen sind
 - **Grund**: Die finalen Projekte sind noch nicht vollständig fertiggestellt oder freigegeben
 - **Geplant**: Kontinuierliche Updates mit abgeschlossenen Projekten
+- Aus dem selben Grund fehlen auch noch einige Youtube-Links
 
 ### Design & Animation
 - **Blender**: 3D-Animationen und Video-Rendering
